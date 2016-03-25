@@ -1,0 +1,44 @@
+!!!
+%html
+  %head
+    %meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
+    %link{rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', integrity:'sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7', crossorigin:'anonymous'}
+    %link{rel: 'stylesheet', href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css", integrity:"sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r", crossorigin:"anonymous"}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  %body
+    %table.table.table-striped
+      - results.each do |area, listings|
+        - listings.sort_by {|l| l['published']}.reverse.each do |listing|
+          %tr
+            %td
+              - if config[:bboxes].size > 1
+                = "#{area}:"
+              = "#{listing['location']['namedAreas'].first}"
+            %td.text-nowrap
+              %a{target: '_blank', href: "https://www.google.se/maps/place/#{listing['coordinates'].join(',')}"}
+                = "#{listing['address']}, #{listing['floor']}tr"
+            %td.text-nowrap= "#{listing['rooms']}, #{listing['livingArea']}m, #{listing['constructionYear']} year"
+            %td.text-nowrap= listing['listPrice']
+            %td.text-nowrap= listing['rent']
+            %td.text-nowrap
+              %strong
+                %a{target: '_blank', href: listing['url']}
+                  = listing['published']
+            %td
+              - listing['routes'].each do |dst, route|
+                %b= dst
+                = route
+                %br
+          - listing['sold'].sort_by {|l| l['soldDate']}.reverse.each do |sold_listing|
+            - sold_address = sold_listing['location']['address']['streetAddress']
+            %tr
+              %td
+              %td
+                %a{target: '_blank', href: "https://www.google.se/maps/place/#{sold_address.gsub(' ', '+')},+Stockholm"}
+                  = "#{sold_address}, #{sold_listing['floor']}tr"
+              %td.text-nowrap= "#{sold_listing['rooms']}, #{sold_listing['livingArea']}m, #{sold_listing['constructionYear']} year"
+              %td.text-nowrap= "#{(sold_listing['soldPrice'] * 1.0 / sold_listing['listPrice']).round(2) rescue 'error'}: #{sold_listing['soldPrice']}"
+              %td= sold_listing['rent']
+              %td
+                %a{target: '_blank', href: sold_listing['url']}
+                  = sold_listing['soldDate']

@@ -1,0 +1,29 @@
+departure_time: 'next Monday 10:20'
+transit_options:
+  mode: 'transit'
+  key: 'CHANGEME'
+  https: true
+  # transit_mode: 'subway'
+  # transit_routing_preference: 'fewer_transfers'
+walking_distance_limit: 800
+transit_limits:
+  'T-Centralen, Stockholm': 25
+  'Birger Jarlsgatan 61, Stockholm': 40
+minimal_floor: 3
+maps_key: 'CHANGEME'
+booli:
+  appname: 'CHANGEME'
+  appkey: 'CHANGEME'
+  query:
+    objectType: 'lägenhet'
+    maxListPrice: 2200000
+    minLivingArea: 49
+    maxRent: 5200
+    limit: 500
+bboxes:
+  all:
+    - 59.236431
+    - 17.781703
+    - 59.431630
+    - 18.346754
+
