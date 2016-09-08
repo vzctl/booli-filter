@@ -1,29 +1,62 @@
+# Trains go more often during peak hours and commute time depends a lot on time and week days.
+# Specify the time you want to leave for work.
 departure_time: 'next Monday 10:20'
+
+# Walking distance, in meters, from your home to the first transit point (Bus, T-bana).
+# Keep in mind that Google Maps does not include all the metro entrances
+walking_distance_limit: 500
+
+# This is a list of addresses you want to commute to with maximum time, in minutes.
+transit_limits:
+  'T-Centralen, Stockholm': 25
+  'Birger Jarlsgatan 61, Stockholm': 30
+
+# Those are request parameters for GoogleMaps Directions API
+# You can find all the parameters here:
+# https://developers.google.com/maps/documentation/directions/intro
+# You need to get your API key here:
+# https://developers.google.com/maps/documentation/directions/get-api-key
 transit_options:
   mode: 'transit'
   key: 'CHANGEME'
   https: true
   # transit_mode: 'subway'
   # transit_routing_preference: 'fewer_transfers'
-walking_distance_limit: 800
-transit_limits:
-  'T-Centralen, Stockholm': 25
-  'Birger Jarlsgatan 61, Stockholm': 40
-minimal_floor: 3
-maps_key: 'CHANGEME'
+
+
+# Those are query parameters for booli.se
+# You can find all the parameters here:
+# https://www.booli.se/api/reference
+# You need to get your appname and appkey here:
+# https://www.booli.se/api/key
 booli:
   appname: 'CHANGEME'
   appkey: 'CHANGEME'
   query:
     objectType: 'lägenhet'
-    maxListPrice: 2200000
-    minLivingArea: 49
-    maxRent: 5200
-    limit: 500
+    maxListPrice: 2500000
+    minLivingArea: 45
+    maxRent: 3000
+    limit: 1000
+
+# Booli does not support filtering by the floor numbers.
+# Set it to 0 if you are looking for a house or if you do not care.
+minimal_floor: 3
+
+# (Optional stuff)
+
+# You need to use this block only if you want to search in a specific area.
+# By default it looks within Stockholm T-bana limits.
+# You can specify multiple boxes. Each bbox has a name and coordinates of 2 corners.
+# You can find more information in the booli.se API reference:
+# https://www.booli.se/api/reference
+# The script generates map.html with google map visualisation of the boxes.
+# You need to get a Google Maps JavaScript API key here:
+# https://developers.google.com/maps/documentation/javascript/get-api-key
 bboxes:
   all:
     - 59.236431
     - 17.781703
     - 59.431630
     - 18.346754
-
+maps_key: 'CHANGEME'
