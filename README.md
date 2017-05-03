@@ -33,5 +33,4 @@ chrome list.html
 
 ## Output example
 
-![list.html]
-(list.html.png)
+![list.html](list.html.png)
